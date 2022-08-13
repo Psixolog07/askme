@@ -1,0 +1,9 @@
+<h2>User</h2>
+<p><%= @user.name %></p>
+<p>user_id: <b><%= @user.id %></b></p>
+
+<p><%= link_to "Users", users_path %></p>
+<% user = User.find(5)%>
+<%= link_to user.name, user %>
+
+<%= link_to user.name, title: 'Страница пользователя', class: 'text-small' %>

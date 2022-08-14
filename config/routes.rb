@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root to: 'questions#index'
-  resources :questions
-  patch '/questions/1/hide', to: 'questions#hide'
+  
+  resources :questions do
+    patch :hide, on: :member
+    patch :unhide, on: :member
+  end
+
   resources :users
 end

@@ -12,12 +12,18 @@
       question_path(@question),
       method: :delete,
       title: "Удалить вопрос",
-      form: {data: {turbo_confirm: 'Вы уверены что хотите удалить вопрос?'}}
-    %>
+      form: {data: {turbo_confirm: 'Вы уверены что хотите удалить вопрос?'}} %>
 
-    <% if @question.hidden == false %>
+    <% if @question.hidden %>
       <%= button_to fa_icon("eye"), 
+      unhide_question_path(@question),
+      method: :patch,
+      title: "Сделать вопрос видимым", 
+      form: {data: {turbo_confirm: 'Вы уверены что хотите сделать вопрос видимым?'}} %>
+      <% else %>
+      <%= button_to fa_icon("eye-slash"), 
       hide_question_path(@question),
+      method: :patch,
       title: "Спрятать вопрос", 
       form: {data: {turbo_confirm: 'Вы уверены что хотите спрятать вопрос?'}} %>
     <% end %>

@@ -1,22 +1,22 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy, :hide, :unhide]
+  before_action :set_question, only: %i[show edit update destroy hide unhide]
 
   def create
     @question = Question.create(question_params)
   
-    redirect_to question_path(@question)
+    redirect_to question_path(@question), notice: "Новый вопрос создан!"
   end
 
   def update
     @question.update(question_params)
     
-    redirect_to question_path(@question)
+    redirect_to question_path(@question), notice: "Вопрос изменен!"
   end
 
   def destroy
     @question.destroy
 
-    redirect_to questions_path
+    redirect_to questions_path, notice: "Вопрос удален!"
   end
 
   def show
@@ -24,6 +24,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all
+    @question = Question.new
   end
 
   def new
@@ -35,11 +36,13 @@ class QuestionsController < ApplicationController
 
   def hide
     @question.update(hidden: true)
+
     redirect_to questions_path
   end
 
   def unhide
     @question.update(hidden: false)
+    
     redirect_to questions_path
   end
 

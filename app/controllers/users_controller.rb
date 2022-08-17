@@ -1,21 +1,19 @@
 class UsersController < ApplicationController
+  def new
+    session[:current_time] = Time.now
+    @user = User.new
+  end
+
   def create
-    @user = User.create(name: params[:user][:name], email: params[:user][:email])
+    user = User.create(user_params)
+    session[:user_id] = user.id
+
+    redirect_to root_path, notice: "Регистрация прошла успешно"
   end
 
-  def update
-    @user = User.find(params[:id]).update(name: params[:user][:name], email: params[:user][:email])
-  end
+  private
 
-  def destroy
-    @user = User.find(params[:id]).destroy
-  end
-
-  def show
-    @user = User.find(params[:id])
-  end
-
-  def index
-    @users = User.all
+  def user_params
+    params.require(:user).permit(:name, :nickname, :email, :password)
   end
 end

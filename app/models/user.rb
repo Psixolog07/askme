@@ -6,6 +6,8 @@ class User < ApplicationRecord
   validates :nickname, presence: true, uniqueness: true, length: { maximum: 40 }, format: { with: /\A\w+\z/ }
   validates :header_color, format: { with: /\A#\w{6}/i }
 
+  has_many :questions, dependent: :delete_all
+  
   private
 
   def downcase_nickname

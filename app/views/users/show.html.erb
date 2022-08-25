@@ -1,0 +1,32 @@
+<div class="user-box">
+  <h2 class="title-lg mt-lg"><%= @user.name %></h2>
+
+  <% if current_user == @user %>
+    <p class="mt mb-lg"><%= link_to fa_icon("pencil"), edit_user_path(@user)%></p>
+  <% end %>
+
+  <p class="text-bold mt mb-lg"><%= show_nickname(@user) %></p>
+</div>
+
+<div class="container">
+  <div class="text-center">
+    <%= link_to "Спроси меня", new_question_path(user_id: @user.id), class: "button button-yellow"%>
+  </div>
+
+<% if @questions.any? %>
+  <div class="container mt-sm">
+    <h2 class='title-lg text-center'>
+      <%= question_amount = @questions.count %>
+      <%= inclination(question_amount, 'вопрос', 'вопроса', 'вопросов') %>
+    <h2>
+  </div>
+</div>
+
+  <% @questions.order("created_at DESC").each do |question| %>
+    <div class="container mt-sm <%= "hidden" if question.hidden %>">
+      <%= render question %>
+    </div>
+  <% end %>
+<% else %>
+  <p class="text-center mt-lg text-bold">Тут пока пусто((</p>
+<% end %>

@@ -1,30 +1,43 @@
-<div class="mb-sm"><%= simple_format h(question.body) %></div>
+<div class="mb-sm">
+  <%= simple_format h(question.body) %>
+</div>
+
+<% if question.answer.present? %>
+  <div class="mb-sm text-dark-red">
+    <%= simple_format h(question.answer) %>
+  </div>
+<% end %>
 
 <div class="text-sm question-footer">
   <div class="text-gray"><%= l(question.created_at, format: :short) %></div>
 
-  <div>
-    <%= link_to fa_icon("pencil"), edit_question_path(question), title: "Изменить вопрос" %>
-      
-      <%=
-        button_to fa_icon("trash-o"),
-        question_path(question),
-        method: :delete,
-        title: "Удалить вопрос",
-        form: {data: {turbo_confirm: 'Вы уверены что хотите удалить вопрос?'}} %>
+  <% if current_user == question.user %>
+    <div>
+      <% edit_icon = (question.answer.present? ? "pencil" : "reply") %>
+      <% edit_text = (question.answer.present? ? "Изменить вопрос" : "Ответить на вопрос") %>
+      <%= link_to fa_icon(edit_icon), edit_question_path(question), title: edit_text, class: "mr-sm" %>
+        
+        <%=
+          button_to fa_icon("trash-o"),
+          question_path(question),
+          method: :delete,
+          title: "Удалить вопрос",
+          form: {data: {turbo_confirm: 'Вы уверены что хотите удалить вопрос?'}},
+          class: "mr-sm" %>
 
-      <% if question.hidden %>
-        <%= button_to fa_icon("eye"), 
-        unhide_question_path(question),
-        method: :patch,
-        title: "Сделать вопрос видимым", 
-        form: {data: {turbo_confirm: 'Вы уверены что хотите сделать вопрос видимым?'}} %>
-        <% else %>
-        <%= button_to fa_icon("eye-slash"), 
-        hide_question_path(question),
-        method: :patch,
-        title: "Спрятать вопрос", 
-        form: {data: {turbo_confirm: 'Вы уверены что хотите спрятать вопрос?'}} %>
-      <% end %>
-  </div>
+        <% if question.hidden %>
+          <%= button_to fa_icon("eye"), 
+          unhide_question_path(question),
+          method: :patch,
+          title: "Сделать вопрос видимым", 
+          form: {data: {turbo_confirm: 'Вы уверены что хотите сделать вопрос видимым?'}} %>
+          <% else %>
+          <%= button_to fa_icon("eye-slash"), 
+          hide_question_path(question),
+          method: :patch,
+          title: "Спрятать вопрос", 
+          form: {data: {turbo_confirm: 'Вы уверены что хотите спрятать вопрос?'}} %>
+        <% end %>
+    </div>
+  <% end %>
 </div>

@@ -6,6 +6,6 @@ Rails.application.routes.draw do
     patch :unhide, on: :member
   end
 
-  resource :session, only: %i[new create destroy]
-  resources :users, only: %i[new create edit update destroy]
+  resource :session, only: %i[ new create destroy ]
+  resources :users, except: :index
 end

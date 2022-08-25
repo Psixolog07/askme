@@ -1,20 +1,12 @@
-<div class="container">
-  <p class="mt"><%= link_to "Создать новый вопрос", new_question_path, class: "button button-main" %></p>
-
-  <p class="mt"><%= render 'form', question: @question %></p>
-
-  <div class="container mt-sm">
-    <h2 class='title-lg'>
-      <%= question_amount = @questions.count %>
-      <%= inclination(question_amount, 'вопрос', 'вопроса', 'вопросов') %>
-    <h2>
-  </div>
+<div class="container mt-sm">
+  <h2 class='title-lg text-center'>
+    <%= question_amount = @questions.count %>
+    <%= inclination(question_amount, 'вопрос', 'вопроса', 'вопросов') %>
+  <h2>
 </div>
 
-<% @questions.each do |question| %>
-  <% if question.hidden %>
-    <div class="container mt-sm hidden"><%= render question %></div>
-  <% else %>
-    <div class="container mt-sm"><%= render question %></div>
-  <% end %>
+<% @questions.order("created_at DESC").each do |question| %>
+  <div class="container mt-sm <%= "hidden" if question.hidden %>">
+    <%= render question %>
+  </div>
 <% end %>

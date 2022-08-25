@@ -10,4 +10,20 @@ module ApplicationHelper
       third_form
     end
   end
+
+  def question_author(question)
+    if question.author_id.present?
+      link_to show_nickname(User.find(question.author_id)), user_path(question.author_id)
+    else
+      "Anonymus"
+    end
+  end
+
+  def question_owner(question)
+    link_to show_nickname(User.find(question.user_id)), user_path(question.user_id)
+  end
+
+  def current_page_index?
+    current_page?(controller: 'questions', action: 'index')
+  end
 end

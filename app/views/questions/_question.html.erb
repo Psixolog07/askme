@@ -1,4 +1,13 @@
 <div class="mb-sm">
+  <p>
+    Вопрос от <%= question_author(question) %> 
+    <% if current_page_index? %>
+      для <%= question_owner(question) %>
+    <% end %>
+  </p>
+</div>
+
+<div class="mb-sm">
   <%= simple_format h(question.body) %>
 </div>
 

@@ -7,6 +7,8 @@ class User < ApplicationRecord
   validates :header_color, format: { with: /\A#\w{6}/i }
 
   has_many :questions, dependent: :delete_all
+  has_many :posted_questions, class_name: "Question", foreign_key: :author_id, dependent: :nullify
+  #Ex:- :null => false
   
   private
 

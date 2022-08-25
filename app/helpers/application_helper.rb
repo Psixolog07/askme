@@ -13,7 +13,8 @@ module ApplicationHelper
 
   def question_author(question)
     if question.author_id.present?
-      link_to show_nickname(User.find(question.author_id)), user_path(question.author_id)
+      user_nickname = show_nickname(User.find(question.author_id))
+      link_to user_nickname, user_path(question.author_id)
     else
       "Anonymus"
     end

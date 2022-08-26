@@ -8,13 +8,13 @@
   <p class="text-bold mt-sm mb-lg"><%= show_nickname(@user) %></p>
 
   <% if current_user == @user %>
-    <p class="mt mb-lg"><%= link_to fa_icon("pencil"), edit_user_path(@user)%></p>
+    <p class="mt mb-lg"><%= link_to fa_icon("pencil"), edit_user_path(@user.nickname)%></p>
   <% end %>
 </div>
 
 <div class="container">
   <div class="text-center">
-    <%= link_to "Спроси меня", new_question_path(user_id: @user.id), class: "button button-yellow"%>
+    <%= link_to "Спроси меня", new_question_path(nickname: @user.nickname), class: "button button-yellow"%>
   </div>
 
 <% if @questions.any? %>

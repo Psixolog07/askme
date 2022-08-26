@@ -1,11 +1,15 @@
 <div class="user-box">
   <h2 class="title-lg mt-lg"><%= @user.name %></h2>
+  
+  <div class="mt">
+    <%= render partial: 'users/user_avatar', locals: {user: @user} %>
+  </div>
+  
+  <p class="text-bold mt-sm mb-lg"><%= show_nickname(@user) %></p>
 
   <% if current_user == @user %>
     <p class="mt mb-lg"><%= link_to fa_icon("pencil"), edit_user_path(@user)%></p>
   <% end %>
-
-  <p class="text-bold mt mb-lg"><%= show_nickname(@user) %></p>
 </div>
 
 <div class="container">
@@ -22,7 +26,7 @@
   </div>
 </div>
 
-  <% @questions.order("created_at DESC").each do |question| %>
+  <% @questions.each do |question| %>
     <div class="container mt-sm <%= "hidden" if question.hidden %>">
       <%= render question %>
     </div>

@@ -1,12 +1,24 @@
+<div class="container">
+  <h2 class="title-lg mb text-center">Недавно добавились</h2>
+
+  <div class="users-box">
+    <% @users.each do |user| %>
+      <%= render partial: 'users/user_avatar', locals: {user: user} %>
+    <% end %>
+  </div>
+</div>
+
 <div class="container mt-sm">
   <h2 class='title-lg text-center'>
+    <%= inclination(@questions.count, 'Последний', 'Последние', 'Последние') %>
     <%= question_amount = @questions.count %>
     <%= inclination(question_amount, 'вопрос', 'вопроса', 'вопросов') %>
   <h2>
 </div>
 
-<% @questions.order("created_at DESC").each do |question| %>
+<% @questions.each do |question| %>
   <div class="container mt-sm <%= "hidden" if question.hidden %>">
+    <p class="mb text-sm text-grey">Вопрос <%= link_to "##{question.id}", question_path(question) %></p>
     <%= render question %>
   </div>
 <% end %>

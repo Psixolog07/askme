@@ -1,16 +1,17 @@
 class QuestionsController < ApplicationController
   before_action :ensure_current_user, only: %i[edit update destroy hide unhide]
   before_action :set_question_for_current_user, only: %i[edit update destroy hide unhide]
+  after_action :delete_useless_hashtags, only: %i[ update destroy ]
 
   def create
     @question = Question.create(params.require(:question).permit(:body, :user_id))
     @question.author = current_user
 
     if @question.save
-      redirect_to user_path(@question.user), notice: "Новый вопрос создан!"
+      redirect_to user_path(@question.user.nickname), notice: "Новый вопрос создан!"
     else
-      flash.now[:alert] = "Вы неправильно заполнили вопрос"
-      render :new
+      flash[:alert] = "Вы неправильно заполнили вопрос"
+      redirect_to new_question_path(nickname: @question.user.nickname)
     end
   end
 
@@ -18,7 +19,7 @@ class QuestionsController < ApplicationController
     @question.update(params.require(:question).permit(:body, :answer))
 
     if @question.save
-      redirect_to user_path(@question.user), notice: "Вопрос изменен!"
+      redirect_to user_path(@question.user.nickname), notice: "Вопрос изменен!"
     else
       flash.now[:alert] = "Вы неправильно заполнили вопрос"
       render :edit
@@ -36,8 +37,8 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.order(created_at: :desc).last(10)
-    @users = User.order(created_at: :desc).last(10)
+    @questions = Question.order(created_at: :desc).first(10)
+    @users = User.order(created_at: :desc).first(10)
   end
 
   def new
@@ -66,5 +67,9 @@ class QuestionsController < ApplicationController
 
   def set_question_for_current_user
     @question = current_user.questions.find(params[:id])
+  end
+
+  def delete_useless_hashtags
+    Hashtag.all.each { |hashtag| hashtag.destroy unless hashtag.question_hashtags.any? }
   end
 end

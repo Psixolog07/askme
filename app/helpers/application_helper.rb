@@ -24,8 +24,4 @@ module ApplicationHelper
     owner = User.find(question.user_id)
     link_to show_nickname(owner), user_path(owner.nickname)
   end
-
-  def current_page_index?
-    current_page?(controller: 'questions', action: 'index')
-  end
 end

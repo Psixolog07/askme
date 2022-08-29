@@ -7,18 +7,15 @@ class SessionsController < ApplicationController
 
     if user.present?
       session[:user_id] = user.id
-
       redirect_to root_path, notice: "Вы вошли на сайт"
     else
       flash.now[:alert] = "Неправильная электронная почта или пароль"
-      
       render :new
     end
   end
 
   def destroy
     session.delete(:user_id)
-
     redirect_to root_path, notice: "Заходите еще)"
   end
 

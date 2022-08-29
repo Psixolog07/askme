@@ -9,6 +9,14 @@
 </div>
 
 <div class="container mt-sm">
+  <span>Популярные хештэги: 
+    <% Hashtag.top_10_popular_hashtags.each do |hashtag| %>
+      <%= link_to hashtag, hashtag_path(Hashtag.find_by(name: hashtag)) %>
+    <% end %>
+  </span>
+</div>
+
+<div class="container mt-sm">
   <h2 class='title-lg text-center'>
     <%= inclination(@questions.count, 'Последний', 'Последние', 'Последние') %>
     <%= question_amount = @questions.count %>

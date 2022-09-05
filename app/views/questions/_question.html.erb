@@ -1,5 +1,8 @@
 <div class="mb-sm">
-  <p>Вопрос от <%= question_author(question) %> для <%= question_owner(question) %></p>
+  <p>Вопрос от <%= question_author(question) %>
+  <% if current_page?(@user) %>
+    для <%= question_owner(question) %></p>
+  <% end %>
 </div>
 
 <div class="mb-sm">
@@ -22,7 +25,7 @@
   <div class="text-gray">
     <%= l(question.created_at, format: :short) %>
 
-    <% if current_user == question.user %>
+    <% if current_user == question.user && !current_page?(@user) %>
       <div class="mt-sm">
         <% edit_icon = (question.answer.present? ? "pencil" : "reply") %>
         <% edit_text = (question.answer.present? ? "Изменить вопрос" : "Ответить на вопрос") %>

@@ -1,24 +1,17 @@
-# README
+# Аналог Askfm
+Задавайте друг другу вопросы и веселитесь))
+[Посмотреть как все устроено](https://fathomless-oasis-70120.herokuapp.com/)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Установка
+Для работы вам потребуется `ruby "3.0.4"`, `rails 7`, `gem bundler`
 
-Things you may want to cover:
+Склонируйте проект и выполните следующие комманды
 
-* Ruby version
+```
+bundle
+rails db:migrate
+```
 
-* System dependencies
+# Запуск
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Для запуска на локальном сервере выполните команду `rails s`

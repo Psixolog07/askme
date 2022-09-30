@@ -18,7 +18,7 @@
 <div class="text-sm question-footer">
   <div>
     <% question.hashtags.each do | hashtag | %>
-      <%= link_to hashtag.name, hashtag_path(hashtag) %>
+      <%= link_to hashtag.name, hashtag_path(hashtag.name) %>
     <% end %>
   </div>
   

@@ -9,9 +9,8 @@ class Question < ApplicationRecord
   private
 
   def update_questions_hashtags
-    self.hashtags =
-      "#{body} #{answer}".downcase.scan(/#[a-z,а-я,0-9,\-,_]+/i).uniq.map do |hashtag|
-        Hashtag.find_or_create_by(name: hashtag)
-      end
+    self.hashtags = "#{body} #{answer}".downcase.scan(/#[a-z,а-я,0-9,\-,_]+/i).uniq.map do |hashtag|
+      Hashtag.find_or_create_by(name: hashtag[1..-1])
+    end
   end
 end
